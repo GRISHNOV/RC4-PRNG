@@ -19,7 +19,6 @@ static void     swap(uint8_t* const x, uint8_t* const y);
 
 /*
     Initializes the S array with the given key.
-    (Key-scheduling algorithm.)
 */
 static uint8_t* initKeySchedulingAlgorithm(const uint8_t* const key, const uint16_t keyLength);
 
@@ -33,11 +32,11 @@ static uint8_t  getPseudoRandomByte(uint8_t* const s, Bool resetStream);
     See RC4_PRNG.h for description.
 */
 uint8_t* getPseudoRandomBytesStream(
-                                    const uint8_t* const key, 
-                                    const uint16_t       keyLength, 
-                                    const uint64_t       streamHeadOffset, 
-                                    const uint64_t       streamLength
-                                    )
+                                     const uint8_t* const key,
+                                     const uint16_t       keyLength,
+                                     const uint64_t       streamHeadOffset,
+                                     const uint64_t       streamLength
+                                   )
 {
     uint8_t* streamResult = (uint8_t*) malloc(sizeof(uint8_t) * streamLength);
     if (keyLength > 256 || 0 == keyLength)
@@ -64,9 +63,9 @@ uint8_t* getPseudoRandomBytesStream(
     See RC4_PRNG.h for description.
 */
 void printPseudoRandomBytesStream(
-                                    const uint8_t* const stream, 
-                                    const uint64_t       streamLength
-                                    )
+                                     const uint8_t* const stream,
+                                     const uint64_t       streamLength
+                                 )
 {
     printf("\n");
     for(uint64_t i = 0; i < streamLength; i++)
