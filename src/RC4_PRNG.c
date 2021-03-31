@@ -39,6 +39,12 @@ uint8_t* getPseudoRandomBytesStream(
                                    )
 {
     uint8_t* streamResult = (uint8_t*) malloc(sizeof(uint8_t) * streamLength);
+    if (NULL == streamResult)
+    {
+        perror("problem with uint8_t* streamResult");    /* if memory allocation failed */
+        exit(-1);
+    }
+
     if (keyLength > 256 || 0 == keyLength)
     {
         perror("ERROR: key length must be 0 < keyLength < 256 bytes");
@@ -48,12 +54,12 @@ uint8_t* getPseudoRandomBytesStream(
 
     if (streamHeadOffset > 0)
         for(uint64_t i = 0; i < streamHeadOffset; i++)
-            getPseudoRandomByte(s, False);
+            getPseudoRandomByte(s, False);    /* these values are not needed */
 
     for(uint64_t i = 0; i < streamLength; i++)
         streamResult[i] = getPseudoRandomByte(s, False);
 
-    getPseudoRandomByte(s, True);
+    getPseudoRandomByte(s, True);    /* resetting current stream offset */
 
     free(s);
     return streamResult;
@@ -86,6 +92,12 @@ static void swap(uint8_t* const x, uint8_t* const y)
 static uint8_t* initKeySchedulingAlgorithm(const uint8_t* const key, const uint16_t keyLength)
 {
     uint8_t* s = (uint8_t*) malloc(sizeof(uint8_t) * S_BOX_SIZE);
+    if (NULL == s)
+    {
+        perror("problem with uint8_t* s");    /* if memory allocation failed */
+        exit(-1);
+    }
+
     for(uint64_t i = 0; i < S_BOX_SIZE; i++)
         s[i] = i;
 
