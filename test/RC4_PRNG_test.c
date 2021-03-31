@@ -7,63 +7,18 @@
 
 typedef enum {Incorrect = -1, Correct = 0} testResult;
 
-testResult runTestCaseA(void)
+testResult runTestCase(testCase referenceData)
 {
     uint8_t* generatedStream = getPseudoRandomBytesStream(
-                                                            testCaseA.key, 
-                                                            testCaseA.keyLength, 
-                                                            testCaseA.referenceStreamOffset, 
-                                                            testCaseA.referenceStreamLength
-                                                        );
-    
+                                                            referenceData.key,
+                                                            referenceData.keyLength,
+                                                            referenceData.referenceStreamOffset,
+                                                            referenceData.referenceStreamLength
+                                                         );
     testResult compareWithReference = Correct;
-    for (uint8_t i = 0; i < testCaseA.referenceStreamLength; i++)
+    for (uint8_t i = 0; i < referenceData.referenceStreamLength; i++)
     {
-        if(*(generatedStream+i) != testCaseA.referenceStream[i])
-        {
-            compareWithReference = Incorrect;
-            break;
-        }
-    }
-    
-    return compareWithReference;
-}
-
-testResult runTestCaseB(void)
-{
-    uint8_t* generatedStream = getPseudoRandomBytesStream(
-                                                            testCaseB.key, 
-                                                            testCaseB.keyLength, 
-                                                            testCaseB.referenceStreamOffset, 
-                                                            testCaseB.referenceStreamLength
-                                                        );
-    
-    testResult compareWithReference = Correct;
-    for (uint8_t i = 0; i < testCaseB.referenceStreamLength; i++)
-    {
-        if(*(generatedStream+i) != testCaseB.referenceStream[i])
-        {
-            compareWithReference = Incorrect;
-            break;
-        }
-    }
-    
-    return compareWithReference;
-}
-
-testResult runTestCaseC(void)
-{
-    uint8_t* generatedStream = getPseudoRandomBytesStream(
-                                                            testCaseC.key, 
-                                                            testCaseC.keyLength, 
-                                                            testCaseC.referenceStreamOffset, 
-                                                            testCaseC.referenceStreamLength
-                                                        );
-    
-    testResult compareWithReference = Correct;
-    for (uint8_t i = 0; i < testCaseC.referenceStreamLength; i++)
-    {
-        if(*(generatedStream+i) != testCaseC.referenceStream[i])
+        if(*(generatedStream+i) != referenceData.referenceStream[i])
         {
             compareWithReference = Incorrect;
             break;
@@ -76,12 +31,8 @@ testResult runTestCaseC(void)
 int main(void)
 {
     printf("\n");
-    printf("Correct code   =  0\n");
-    printf("Incorrect code = -1\n");
-    printf("\n");
-
-    printf("Run test case A:\t%i\n", runTestCaseA());
-    printf("Run test case B:\t%i\n", runTestCaseB());
-    printf("Run test case C:\t%i\n", runTestCaseC());
+    printf("Run test case A:\t%s\n", (runTestCase(testCaseA) == Correct) ? "Correct" : "Incorrect");
+    printf("Run test case B:\t%s\n", (runTestCase(testCaseB) == Correct) ? "Correct" : "Incorrect");
+    printf("Run test case C:\t%s\n", (runTestCase(testCaseC) == Correct) ? "Correct" : "Incorrect");
     printf("\n");
 }
